@@ -1,0 +1,23 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+.env
+
+# Build artifacts
+build/
+dist/
+
+# OS-specific files
+.DS_Store
+
+# IDE-specific files
+.vscode/
+
+# Test coverage reports
+coverage/
+
+# Log files
+*.log
+
+# package-lock.json
+package-lock.json   
