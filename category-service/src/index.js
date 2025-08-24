@@ -4,26 +4,23 @@ import cors from 'cors';
 import helmet from 'helmet';
 import sequelize  from './config/db.js';
 import swaggerDocs from './docs/swagger.js';
-
-import userRoutes from './routes/user-route.js';
-
+import  categoryRoute  from './routes/category-route.js';
 
 
 const app = express();
-const PORT = 3001;
+const PORT = 3002;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(helmet());
-app.use(express.json());
+app.use(express.json());    
 
 
-app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/cate', categoryRoute);
 
+swaggerDocs(app);   
 
-
-swaggerDocs(app);
 
 sequelize.sync({ force: false }).then(() => {
     console.log("Database connected");

@@ -1,11 +1,11 @@
 {
-  "name": "user-service",
+  "name": "category-service",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --inspect src/index.js"
+    "start": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",

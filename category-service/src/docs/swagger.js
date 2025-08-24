@@ -6,10 +6,10 @@ const options = {
         openapi: "3.0.0",
         info: {
             title: "E-Commerce",
-            version: "1.0.0",
-            description: "User-service API Documentation",
+            version: "1.0.0",   
+            description: "Category-service API Documentation",
         },
-        servers: [{ url: "http://localhost:3001/api/v1/user" }],
+        servers: [{ url: "http://localhost:3002/api/v1/cate" }],
         components: {
             securitySchemes: {
                 BearerAuth: {
