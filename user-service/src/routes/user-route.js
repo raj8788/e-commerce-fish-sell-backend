@@ -1,5 +1,5 @@
 import express from 'express';
-import {register} from '../controller/auth-controller.js';
+import {register, login} from '../controller/auth-controller.js';
 
 const router = express.Router();
 
@@ -58,6 +58,37 @@ const router = express.Router();
  *         description: Internal server error
  */
 router.post('/auth/register',register);   
+
+
+
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Login user and get token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [admin, coustomer]
+ *     responses:
+ *       200:
+ *         description: Successful login
+ *       404:
+ *         description: Not found
+ */
+router.post('/auth/login', login);
+
 
 
 export default router;
