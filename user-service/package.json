@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon  src/index.js"
+    "start": "nodemon  src/index.js",
+    "build": "cpy \"src/**/*\" dist --parents"
   },
   "keywords": [],
   "author": "",
@@ -23,5 +24,8 @@
     "sequelize": "^6.37.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "cpy-cli": "^6.0.0"
   }
 }

@@ -7,19 +7,20 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:3001"
+    environment:
+      # MySQL
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=user
+      - DB_PASSWORD=123456
+      - DB_NAME=ecommerce
+      # MongoDB
+      - MONGO_URI=mongodb://mongodb:27017/ecommerce_mongo
     depends_on:
       - kafka
       - rabbitmq
-
-  product-service:
-    build:
-      context: ./product-service
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-    depends_on:
-      - kafka
-      - rabbitmq
+      - mysql
+      - mongodb
 
   category-service:
     build:
@@ -27,9 +28,41 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3002:3002"
+    environment:
+      # MySQL
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=user
+      - DB_PASSWORD=123456
+      - DB_NAME=ecommerce
+      # MongoDB
+      - MONGO_URI=mongodb://mongodb:27017/ecommerce_mongo
     depends_on:
       - kafka
-      - rabbitmq    
+      - rabbitmq
+      - mysql
+      - mongodb
+
+  product-service:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    environment:
+      # MySQL
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=user
+      - DB_PASSWORD=123456
+      - DB_NAME=ecommerce
+      # MongoDB
+      - MONGO_URI=mongodb://mongodb:27017/ecommerce_mongo
+    depends_on:
+      - kafka
+      - rabbitmq
+      - mysql
+      - mongodb
 
   zookeeper:
     image: bitnami/zookeeper:3.9
@@ -59,3 +92,30 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecommerce
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3307:3306"   # host 3307 → container 3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mysql_data:
+  mongo_data:
