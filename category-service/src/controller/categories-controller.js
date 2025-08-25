@@ -47,18 +47,21 @@ export const updateCategoryById = async (req , res) =>{
 }
 
 
-export const deleteCategoryById = async (req ,res)=>{
-    const { category_id } = req.params;
+export const deleteCategoryById = async (req, res) => {
+  const { category_id } = req.params;
 
-    try {
-        const category = await Category.findOne({ where: { category_id } });
-        if (!category) {
-            return res.status(404).json({ message: "Category not found" });
-        }
+  try {
+    const category = await Category.findOne({ where: { id: category_id } });
 
-        await category.destroy();
-        res.status(200).json({ message: "Category deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
+    if (!category) {
+      return res.status(404).json({ message: "Category not found" });
     }
-}
+
+    category.is_active = true;
+    await category.save();
+
+    res.status(200).json({ message: "Category deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

@@ -19,6 +19,10 @@ const categoryModel = sequelize.define('Category',{
         type: DataTypes.STRING(100),
         allowNull:false
     },
+    is_active:{
+        type: DataTypes.BOOLEAN,
+        defaultValue:false
+    }
 
 },{
     tableName:'categories',
