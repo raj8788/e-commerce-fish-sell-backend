@@ -4,7 +4,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import sequelize  from './config/db.js';
 import swaggerDocs from './docs/swagger.js';    
-import connectDB from './config/mongo_db.js';
 import productRoute from './routes/productRoute.js';
 
 
@@ -27,4 +26,3 @@ sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
 
-connectDB();

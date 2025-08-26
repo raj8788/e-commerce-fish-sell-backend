@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const SECRET = process.env.SECRET_KEY;
+const SECRET = process.env.JWT_SECRET;
 
 
 export const authMiddleware = (req, res, next) => {

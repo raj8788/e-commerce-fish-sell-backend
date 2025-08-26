@@ -1,45 +1,63 @@
-import mongoose from "mongoose";
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
 
-const ProductSchema = new mongoose.Schema(
+const Product = sequelize.define(
+  "Product",
   {
     product_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      auto: true,
-      required: true,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     category_id: {
-      type: Number, 
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     product_name: {
-      type: String,
-      required: true,
-      maxlength: 150,
-      index: "text", // Fulltext index equivalent
+      type: DataTypes.STRING(150),
+      allowNull: false,
     },
     description: {
-      type: String,
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     price: {
-      type: mongoose.Schema.Types.Decimal128,
-      required: true,
+      type: DataTypes.DECIMAL(10, 2), // similar to Decimal128
+      allowNull: false,
     },
     stock_quantity: {
-      type: Number,
-      default: 0,
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
-    product_img:{
-      type: String,
-      default: "default-product.png",
+    product_img: {
+      type: DataTypes.STRING,
+      defaultValue: "default-product.png",
     },
     is_active: {
-      type: Boolean,
-      default: true,
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
   },
   {
-    timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
+    tableName: "products",
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    indexes: [
+      {
+        type: "FULLTEXT", // MySQL Fulltext index
+        fields: ["product_name"],
+      },
+    ],
   }
 );
 
-export const Product = mongoose.model("Product", ProductSchema);
+export default Product;

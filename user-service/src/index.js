@@ -22,7 +22,6 @@ app.use(express.json());
 app.use('/api/v1/user', userRoutes);
 
 
-
 swaggerDocs(app);
 
 sequelize.sync({ force: false }).then(() => {
