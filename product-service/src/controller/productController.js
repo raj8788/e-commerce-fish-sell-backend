@@ -1,7 +1,8 @@
 import Product from "../models/productsModel.js"; 
 
 export const createProduct = async (req, res) => {
-  const { category_id, product_name, description, price, stock_quantity, product_img } = req.body;
+  
+  const { category_id, product_name, description, price, stock_quantity, product_img, rating } = req.body;
 
   try {
     const newProduct = await Product.create({
@@ -11,6 +12,7 @@ export const createProduct = async (req, res) => {
       price,
       stock_quantity,
       product_img,
+      rating
     });
 
     res.status(201).json(newProduct);
@@ -28,13 +30,28 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
+
+export const getProductById = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const product = await Product.findByPk(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+}
+
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { category_id, product_name, description, price, stock_quantity, product_img, is_active } = req.body;
+  const { category_id, product_name, description, price, stock_quantity, product_img } = req.body;
 
   try {
     const [updated] = await Product.update(
-      { category_id, product_name, description, price, stock_quantity, product_img, is_active },
+      { category_id, product_name, description, price, stock_quantity, product_img },
       { where: { product_id: id } }
     );
 

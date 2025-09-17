@@ -14,7 +14,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /auth/register:
+ * /register:
  *   post:
  *     summary: Register a new user
  *     tags: [Authentication]
@@ -57,13 +57,13 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post('/auth/register',register);   
+router.post('/register',register);   
 
 
 
 /**
  * @swagger
- * /auth/login:
+ * /login:
  *   post:
  *     summary: Login user and get token
  *     tags: [Authentication]
@@ -87,7 +87,7 @@ router.post('/auth/register',register);
  *       404:
  *         description: Not found
  */
-router.post('/auth/login', login);
+router.post('/login', login);
 
 
 

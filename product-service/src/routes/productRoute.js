@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProduct, getAllProducts, updateProduct, deleteProductById } from '../controller/productController.js';
+import { createProduct, getAllProducts, updateProduct, deleteProductById, getProductById } from '../controller/productController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 
 
@@ -18,7 +18,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /prod/create:
+ * /create:
  *   post:
  *     summary: Create a new product
  *     tags: [Products]
@@ -60,6 +60,12 @@ const router = express.Router();
  *                 format: uri
  *                 description: URL of the product image
  *                 example: "https://example.com/images/mouse.png"
+ *               rating:
+ *                 type: number
+ *                 format: float
+ *                 description: Product rating
+ *                 example: 4.5   
+ *              
  *     responses:
  *       201:
  *         description: Product created successfully
@@ -68,12 +74,12 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post('/prod/create', authMiddleware, createProduct);
+router.post('/create', authMiddleware, createProduct);
 
 
 /**
  * @swagger
- * /prod/getAll:
+ * /get-all:
  *   get:
  *     summary: Retrieve all categories
  *     tags: [Products]
@@ -113,12 +119,9 @@ router.post('/prod/create', authMiddleware, createProduct);
  *           description: Product description
  *           example: "This is a sample product description."
  *         price:
- *           type: object
- *           properties:
- *             $numberDecimal:
- *               type: string
- *               description: Price as a decimal string
- *               example: "19.99"
+ *           type: string
+ *           description: Price as a decimal string
+ *           example: "19.99"          
  *         stock_quantity:
  *           type: integer
  *           description: Number of items available in stock
@@ -146,13 +149,47 @@ router.post('/prod/create', authMiddleware, createProduct);
  *           format: date-time
  *           description: Timestamp when the product was last updated
  *           example: "2025-08-25T09:20:50.119Z"
+ *         rating:
+ *           type: number
+ *           format: float
+ *           description: Product rating
+ *           example: 4.5   
  */
-router.get('/prod/getAll', authMiddleware, getAllProducts);
+router.get('/get-all', authMiddleware, getAllProducts);
+
 
 
 /**
  * @swagger
- * /prod/update/{id}:
+ * /getBy-id:
+ *   get:
+ *     summary: Retrieve a product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The product ID
+ *     responses:
+ *       200:
+ *         description: Product details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProductResponse'
+ *       404:
+ *         description: Product not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/getBy-id', authMiddleware, getProductById);
+
+
+/**
+ * @swagger
+ * /update/{id}:
  *   put:
  *     summary: Update an existing product by ID
  *     tags: [Products]
@@ -183,25 +220,23 @@ router.get('/prod/getAll', authMiddleware, getAllProducts);
  *                 description: Product description
  *                 example: "Updated product description."
  *               price:
- *                 type: object
- *                 properties:
- *                   $numberDecimal:
- *                     type: string
- *                     description: Price as a decimal string
- *                     example: "29.99"
+ *                 type: string
+ *                 description: Price as a decimal string
+ *                 example: "29.99"
  *               stock_quantity:
  *                 type: integer
  *                 description: Number of items available in stock
  *                 example: 100
+ *               rating:
+ *                 type: number
+ *                 format: float
+ *                 description: Product rating
+ *                 example: 4.5   
  *               product_img:
  *                 type: string
  *                 format: uri
  *                 description: URL of the product image
  *                 example: "https://example.com/images/salmon.png"
- *               is_active:
- *                 type: boolean
- *                 description: Product active status
- *                 example: true
  *     responses:
  *       200:
  *         description: Product updated successfully
@@ -216,13 +251,13 @@ router.get('/prod/getAll', authMiddleware, getAllProducts);
  *       500:
  *         description: Internal server error
  */
-router.put('/prod/update/:id', authMiddleware, updateProduct);
+router.put('/update/:id', authMiddleware, updateProduct);
 
 
 
 /**
  * @swagger
- * /prod/delete/{id}:
+ * /delete/{id}:
  *   delete:
  *     summary: Delete a product by ID
  *     tags: [Products]
@@ -251,6 +286,6 @@ router.put('/prod/update/:id', authMiddleware, updateProduct);
  *       500:
  *         description: Internal server error
  */
-router.delete('/prod/delete/:id', authMiddleware, deleteProductById)
+router.delete('/delete/:id', authMiddleware, deleteProductById)
 
 export default router;

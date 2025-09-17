@@ -33,6 +33,10 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
       defaultValue: "default-product.png",
     },
+    rating:{
+      type: DataTypes.FLOAT,
+      defaultValue: 0,
+    },
     is_active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
