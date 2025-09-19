@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProduct, getAllProducts, updateProduct, deleteProductById, getProductById } from '../controller/productController.js';
+import { createProduct, getAllProducts, updateProduct, deleteProductById, getProductById, getProductsByCategory } from '../controller/productController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 
 
@@ -155,7 +155,7 @@ router.post('/create', authMiddleware, createProduct);
  *           description: Product rating
  *           example: 4.5   
  */
-router.get('/get-all', authMiddleware, getAllProducts);
+router.get('/get-all', getAllProducts);
 
 
 
@@ -287,5 +287,36 @@ router.put('/update/:id', authMiddleware, updateProduct);
  *         description: Internal server error
  */
 router.delete('/delete/:id', authMiddleware, deleteProductById)
+
+
+
+// find category wise products
+
+/**
+ * @swagger
+ * /categoriesById:
+ *   get:
+ *     summary: Retrieve a product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: category_id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The category ID
+ *     responses:
+ *       200:
+ *         description: Product details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProductResponse'
+ *       404:
+ *         description: Product not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/categoriesById', getProductsByCategory);
 
 export default router;

@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(express.json());    
 
 
-app.use('/api/v1/cate', categoryRoute);
+app.use('/api/v1', categoryRoute);
 
 swaggerDocs(app);   
 

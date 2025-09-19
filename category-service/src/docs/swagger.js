@@ -9,7 +9,7 @@ const options = {
             version: "1.0.0",   
             description: "Category-service API Documentation",
         },
-        servers: [{ url: "http://localhost:3002/api/v1/cate" }],
+        servers: [{ url: "http://localhost:3002/api/v1" }],
         components: {
             securitySchemes: {
                 BearerAuth: {

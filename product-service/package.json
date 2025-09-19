@@ -6,12 +6,14 @@
   "type": "module",
   "scripts": {
     "start": "nodemon src/index.js",
+    "dev": "nodemon src/index.js",
     "build": "cpy \"src/**/*\" dist --parents"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.9",
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",

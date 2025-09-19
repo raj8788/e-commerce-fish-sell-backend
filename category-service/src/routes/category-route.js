@@ -1,5 +1,5 @@
 import express from "express";
-import {createCategory, getAllCategories, updateCategoryById, deleteCategoryById} from '../controller/categories-controller.js'
+import {createCategory, getAllCategories, updateCategoryById, deleteCategoryById, getCategoryById} from '../controller/categories-controller.js'
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 
@@ -75,7 +75,7 @@ categoryRoute.post("/categories",authMiddleware, createCategory);
  *         description: Server error
  */
 
-categoryRoute.get("/categories/getAll", authMiddleware, getAllCategories);
+categoryRoute.get("/categories/getAll", getAllCategories);
 
 
 
@@ -161,5 +161,34 @@ categoryRoute.put("/categories/:category_id", authMiddleware, updateCategoryById
  */
 
 categoryRoute.delete("/categories/:category_id", authMiddleware, deleteCategoryById);
+
+
+/**
+ * @swagger
+ * /categoryById:
+ *   get:
+ *     summary: Retrieve a category by ID
+ *     tags: [Categories]
+ *     parameters:
+ *       - in: query
+ *         name: category_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The category ID
+ *     responses:
+ *       200:
+ *         description: Category details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CategoriesResponse'
+ *       404:
+ *         description: Category not found
+ *       500:
+ *         description: Internal server error
+ */
+categoryRoute.get("/categoryById", getCategoryById);
+
 
 export default categoryRoute;

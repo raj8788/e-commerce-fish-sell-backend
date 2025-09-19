@@ -45,6 +45,7 @@ export const getProductById = async (req, res) => {
   }
 }
 
+
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { category_id, product_name, description, price, stock_quantity, product_img } = req.body;
@@ -84,3 +85,19 @@ export const deleteProductById = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
+// find category wise products
+
+export const getProductsByCategory = async (req, res) => {
+  const { category_id } = req.query; 
+  try {
+    const products = await Product.findAll({where:{ category_id }});
+    if (products.length === 0) {
+      return res.status(404).json({ message: "No products found for this category" });
+    }
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+}

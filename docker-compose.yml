@@ -7,6 +7,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:3001"
+    volumes:
+      - ./user-service/src:/app/src
+      - /app/node_modules
+    command: npm run dev    
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
@@ -26,6 +30,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3002:3002"
+    volumes:
+      - ./category-service/src:/app/src
+      - /app/node_modules
+    command: npm run dev    
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
@@ -45,6 +53,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3003:3003"
+    volumes:
+      - ./product-service/src:/app/src
+      - /app/node_modules
+    command: npm run dev    
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
