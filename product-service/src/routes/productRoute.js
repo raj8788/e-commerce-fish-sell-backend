@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProduct, getAllProducts, updateProduct, deleteProductById, getProductById, getProductsByCategory } from '../controller/productController.js';
+import { createProduct, getAllProducts, updateProduct, deleteProductById, getProductById, getProductsByCategory, searchProducts } from '../controller/productController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 
 
@@ -318,5 +318,34 @@ router.delete('/delete/:id', authMiddleware, deleteProductById)
  *         description: Internal server error
  */
 router.get('/categoriesById', getProductsByCategory);
+
+// search products by name or description
+
+/**
+ * @swagger
+ * /search:
+ *   get:
+ *     summary: Retrieve a product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: product_name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The category ID
+ *     responses:
+ *       200:
+ *         description: Product details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProductResponse'
+ *       404:
+ *         description: Product not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/search', searchProducts);
 
 export default router;

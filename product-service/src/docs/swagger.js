@@ -9,7 +9,7 @@ const options = {
             version: "1.0.0",
             description: "Producr-service API Documentation",
         },
-        servers: [{ url: "http://localhost:3003/api/v1/prod" }],
+        servers: [{ url: "http://localhost:3003/api/v1/prod" },{ url: "http://localhost:3003/api/v1/cart-Item" }],
         components: {
             securitySchemes: {
                 BearerAuth: {

@@ -1,4 +1,5 @@
 import Product from "../models/productsModel.js"; 
+import { Op } from "sequelize";
 
 export const createProduct = async (req, res) => {
   
@@ -98,6 +99,28 @@ export const getProductsByCategory = async (req, res) => {
     }
     res.status(200).json(products);
   } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+}
+
+
+// search products by name or description
+export const searchProducts = async (req, res) => {
+  const { product_name } = req.query;
+  try {
+    const result = await Product.findAll({
+        where: {
+          product_name: {
+            [Op.like]: `%${product_name}%`
+          }
+        }
+    })
+    if(!result){
+      return res.status(404).json({ message: "No products found" });
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 }

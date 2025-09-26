@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import sequelize  from './config/db.js';
 import swaggerDocs from './docs/swagger.js';    
 import productRoute from './routes/productRoute.js';
-
+import cartItemRoute from './routes/cartItemRoute.js'
 
 const app = express();
 const PORT = 3003;
@@ -18,6 +18,7 @@ app.use(express.json());
 
 
 app.use('/api/v1/prod', productRoute);
+app.use('/api/v1/cart-Item', cartItemRoute);
 
 swaggerDocs(app);
 
